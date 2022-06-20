@@ -49,6 +49,12 @@ const columns = [
     align: 'center',
   },
   {
+    title: 'TokenName',
+    dataIndex: 'token_name',
+    key: 'token_name',
+    align: 'center',
+  },
+  {
     title: '操作',
     key: 'action',
     align: 'center',
@@ -88,7 +94,15 @@ const ActionList = ({ actions, setActions }) => {
   }
   const handleOk = (values: any) => {
     console.log('Received values of form: ', values)
-    createAction(values)
+    if (values.actionType === 'MailWithToken') {
+      createAction({
+        MailWithToken: [values.url, values.token, values.receiver, values.title, values.body],
+      })
+    } else if (values.actionType === 'Oracle'){
+      createAction({
+        Oracle: [values.url, values.name],
+      })
+    }
     setIsModalVisible(false)
   }
 

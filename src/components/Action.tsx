@@ -38,9 +38,19 @@ const Action = ({ visible, onCreate, onCancel }) => {
         >
           <Select placeholder="Select a action type">
             <Select.Option value="MailWithToken">邮件</Select.Option>
-            <Select.Option disabled value="Oracle">合约</Select.Option>
+            <Select.Option value="Oracle">合约</Select.Option>
           </Select>
         </Form.Item>
+
+        <Form.Item
+          noStyle
+          shouldUpdate={(prevValues, currentValues) => prevValues.actionType !== currentValues.actionType}
+        >
+          {({ getFieldValue }) => {
+            const actionType = getFieldValue('actionType')
+            if (actionType === 'MailWithToken') {
+              return (
+                <>
 
         <Form.Item
           label="Url"
@@ -81,6 +91,35 @@ const Action = ({ visible, onCreate, onCancel }) => {
         >
           <Input placeholder="body" />
         </Form.Item>
+        </>
+
+        )
+        }
+        else if (actionType === 'Oracle') {
+          return (
+            <>
+            <Form.Item
+              label="价格来源地址"
+              name="url"
+              rules={[{ required: true, message: 'Please input priceLT!' }]}
+            >
+              <Input placeholder="url" />
+            </Form.Item>
+
+          <Form.Item
+          label="Token名称"
+          name="name"
+          rules={[{ required: true, message: 'Please input priceLT!' }]}
+          >
+
+          <Input placeholder="token name"/>
+          </Form.Item>
+          </>
+          )
+        }
+      }}
+      </Form.Item>
+
       </Form>
     </Modal>
   )

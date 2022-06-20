@@ -116,6 +116,8 @@ async function getActions() {
     }
     else if (Oracle) {
       action.type = 'Oracle'
+      action.url = Oracle[0]
+      action.token_name = Oracle[1]
     }
 
     actions.push({
