@@ -18,7 +18,7 @@ const Trigger = ({ visible, onCreate, onCancel }) => {
             onCreate(values)
           })
           .catch((info) => {
-            console.log('Validate Failed:', info)
+            console.error('Validate Failed:', info)
           })
       }}
     >
@@ -57,7 +57,7 @@ const Trigger = ({ visible, onCreate, onCancel }) => {
                   name="interval"
                   rules={[{ required: true, message: 'Please input timer!' }]}
                 >
-                  <Input placeholder="Interval" />
+                  <Input placeholder="Interval" addonAfter="秒" />
                 </Form.Item>
               )
             }

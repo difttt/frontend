@@ -18,7 +18,7 @@ const Action = ({ visible, onCreate, onCancel }) => {
             onCreate(values)
           })
           .catch((info) => {
-            console.log('Validate Failed:', info)
+            console.error('Validate Failed:', info)
           })
       }}
     >
@@ -38,7 +38,7 @@ const Action = ({ visible, onCreate, onCancel }) => {
         >
           <Select placeholder="Select a action type">
             <Select.Option value="MailWithToken">邮件</Select.Option>
-            <Select.Option value="Oracle">合约</Select.Option>
+            <Select.Option disabled value="Oracle">合约</Select.Option>
           </Select>
         </Form.Item>
 
@@ -59,11 +59,11 @@ const Action = ({ visible, onCreate, onCancel }) => {
         </Form.Item>
 
         <Form.Item
-          label="Reciver"
-          name="reciver"
-          rules={[{ required: true, message: 'Please input your reciver!' }]}
+          label="receiver"
+          name="receiver"
+          rules={[{ required: true, message: 'Please input your receiver!' }]}
         >
-          <Input placeholder="reciver" />
+          <Input placeholder="receiver" />
         </Form.Item>
 
         <Form.Item

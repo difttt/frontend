@@ -1,59 +1,94 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Card, Space, Table, Tag } from 'antd'
+import * as substrate from '../substrate'
 import Action from './Action'
 
 const columns = [
   {
-    title: 'ActionName',
-    dataIndex: 'name',
-    key: 'name',
-    render: text => <a>{text}</a>,
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
+    align: 'center',
   },
   {
-    title: 'ActionType',
+    title: 'Type',
     dataIndex: 'type',
     key: 'type',
+    align: 'center',
+    render: (text: string) => `${text}`,
   },
   {
-    title: 'Reciver',
-    dataIndex: 'reciver',
-    key: 'reciver',
+    title: 'URL',
+    dataIndex: 'url',
+    key: 'url',
+    align: 'center',
+  },
+  {
+    title: 'Token',
+    dataIndex: 'token',
+    key: 'token',
+    align: 'center',
+  },
+  {
+    title: 'Receiver',
+    dataIndex: 'receiver',
+    key: 'receiver',
+    align: 'center',
+
   },
   {
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
+    align: 'center',
   },
   {
-    title: 'Action',
+    title: 'Body',
+    dataIndex: 'body',
+    key: 'body',
+    align: 'center',
+  },
+  {
+    title: '操作',
     key: 'action',
+    align: 'center',
     render: (_, record) => (
       <Space size="middle">
-        <a onClick={() => { console.log(record) }}>Delete</a>
+        <a>Delete</a>
       </Space>
     ),
   },
 ]
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    type: 'MailWithToken',
-    token: '123456789',
-    reciver: 'xxx@qq.com',
-    title: 'xxx',
-    body: 'xx',
-  },
-]
 
-const ActionList = () => {
+const ActionList = ({ actions, setActions }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
+  // const [actions, setActions] = useState([])
+
+  const getActions = async () => {
+    const actions = await substrate.getActions()
+    setActions(actions)
+  }
+
+  const createAction = async (values) => {
+    const params = {
+      MailWithToken: [values.url, values.token, values.receiver, values.title, values.body],
+    }
+    const action = await substrate.createAction(params)
+
+    if (action)
+      getActions()
+  }
+
+  useEffect(() => {
+    getActions()
+  }, [])
 
   const showModal = () => {
     setIsModalVisible(true)
   }
   const handleOk = (values: any) => {
     console.log('Received values of form: ', values)
+    createAction(values)
     setIsModalVisible(false)
   }
 
@@ -65,7 +100,7 @@ const ActionList = () => {
             Add Action
           </Button>
         </div>
-        <Table columns={columns} dataSource={data} />
+        <Table bordered columns={columns} dataSource={actions} />
       </Card>
 
       <Action

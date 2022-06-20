@@ -1,6 +1,5 @@
 import { Button, Card, Form, Modal, Select } from 'antd'
-
-const Recipe = ({ visible, onCreate, onCancel }) => {
+const Recipe = ({ visible, triggers, actions, onCreate, onCancel }) => {
   const [form] = Form.useForm()
 
   return (
@@ -18,11 +17,12 @@ const Recipe = ({ visible, onCreate, onCancel }) => {
             onCreate(values)
           })
           .catch((info) => {
-            console.log('Validate Failed:', info)
+            console.error('Validate Failed:', info)
           })
       }}
     >
       <Form
+        form={form}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 14 }}
       >
@@ -31,8 +31,15 @@ const Recipe = ({ visible, onCreate, onCancel }) => {
           name="trigger"
         >
           <Select placeholder="Select a trigger">
-            <Select.Option value="Timer">trigger 1</Select.Option>
-            <Select.Option value="Schedule">trigger 2</Select.Option>
+            {
+              triggers.map((trigger) => {
+                return (
+                  <Select.Option key={trigger.id} value={trigger.id}>
+                    {trigger.id}
+                  </Select.Option>
+                )
+              })
+            }
           </Select>
         </Form.Item>
 
@@ -41,8 +48,15 @@ const Recipe = ({ visible, onCreate, onCancel }) => {
           name="action"
         >
           <Select placeholder="Select a action">
-            <Select.Option value="Timer">action 1</Select.Option>
-            <Select.Option value="Schedule">action 2</Select.Option>
+            {
+              actions.map((action) => {
+                return (
+                  <Select.Option key={action.id} value={action.id}>
+                    {action.id}
+                  </Select.Option>
+                )
+              })
+            }
           </Select>
         </Form.Item>
       </Form>
