@@ -7,4 +7,7 @@ export default defineConfig({
     '@': '/src',
   },
   plugins: [react()],
+  build: {
+    target: 'esnext',
+  },
 })

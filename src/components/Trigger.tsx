@@ -1,6 +1,7 @@
 import { DatePicker, Form, Input, Modal, Select } from 'antd'
+import PropTypes from 'prop-types'
 
-const Trigger = ({ visible, onCreate, onCancel }) => {
+const Trigger = ({ visible, onCreate, onCancel }: any) => {
   const [form] = Form.useForm()
 
   return (
@@ -100,6 +101,12 @@ const Trigger = ({ visible, onCreate, onCancel }) => {
     </Modal>
 
   )
+}
+
+Trigger.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  onCreate: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 }
 
 export default Trigger

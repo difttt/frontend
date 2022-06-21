@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-// import { useAtom } from 'jotai'
+import PropTypes from 'prop-types'
 import dayjs from 'dayjs'
 import { Button, Card, Space, Table } from 'antd'
 import * as substrate from '../substrate'
@@ -29,7 +29,7 @@ const columns = [
     align: 'center',
     dataIndex: 'condition',
     key: 'condition',
-    render: (text: string, record) => {
+    render: (text: string, record: any) => {
       if (record.type === 'Timer') { return `间隔：${text} s` }
       else if (record.type === 'Schedule') {
         const time = +text.split(',').join('')
@@ -44,15 +44,15 @@ const columns = [
     title: '操作',
     align: 'center',
     key: 'action',
-    render: (_, record) => (
+    render: () => (
       <Space size="middle">
         <a onClick={() => {}}>Delete</a>
       </Space>
     ),
   },
-]
+] as any
 
-const TriggerList = ({ triggers, setTriggers }) => {
+const TriggerList = ({ triggers, setTriggers }: { triggers: any; setTriggers: any }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -63,7 +63,7 @@ const TriggerList = ({ triggers, setTriggers }) => {
       setTriggers(triggers)
   }
 
-  const createTrigger = async (data) => {
+  const createTrigger = async (data: any) => {
     setLoading(true)
     const ret = await substrate.createTrigger(data)
     if (ret) {
@@ -128,6 +128,11 @@ const TriggerList = ({ triggers, setTriggers }) => {
       />
     </>
   )
+}
+
+TriggerList.propTypes = {
+  triggers: PropTypes.array.isRequired,
+  setTriggers: PropTypes.func.isRequired,
 }
 
 export default TriggerList

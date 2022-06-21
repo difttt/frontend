@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import { Button, Card, Space, Table } from 'antd'
 import * as substrate from '../substrate'
 import Recipe from './Recipe'
 
-const RecipeList = ({ triggers, actions }) => {
+const RecipeList = ({ triggers, actions }: any) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [recipes, setRecipes] = useState([])
   const [loading, setLoading] = useState(false)
 
   const getRecipes = async () => {
-    const recipes = await substrate.getRecipes()
+    const recipes = await substrate.getRecipes() as any
     setRecipes(recipes)
   }
 
-  const createRecipe = async (actionId, triggerId) => {
+  const createRecipe = async (actionId: number, triggerId: number) => {
     setLoading(true)
     const recipe = await substrate.createRecipe(actionId, triggerId)
 
@@ -23,7 +24,7 @@ const RecipeList = ({ triggers, actions }) => {
     }
   }
 
-  const recipeTurnOn = async (id) => {
+  const recipeTurnOn = async (id: number) => {
     setLoading(true)
     const ret = await substrate.recipeTurnOn(id)
 
@@ -33,7 +34,7 @@ const RecipeList = ({ triggers, actions }) => {
     }
   }
 
-  const recipeTurnOff = async (id) => {
+  const recipeTurnOff = async (id: number) => {
     setLoading(true)
     const ret = await substrate.recipeTurnOff(id)
 
@@ -85,14 +86,14 @@ const RecipeList = ({ triggers, actions }) => {
     {
       title: '操作',
       key: 'action',
-      render: (_, record) => (
+      render: (_: any, record: any) => (
         <Space size="middle">
           <a onClick={() => { recipeTurnOn(record.id) }}>TurnOn</a>
           <a onClick={() => { recipeTurnOff(record.id) }}>TurnOff</a>
         </Space>
       ),
     },
-  ]
+  ] as any
 
   useEffect(() => {
     getRecipes()
@@ -126,6 +127,11 @@ const RecipeList = ({ triggers, actions }) => {
       />
     </>
   )
+}
+
+RecipeList.propTypes = {
+  triggers: PropTypes.array.isRequired,
+  actions: PropTypes.array.isRequired,
 }
 
 export default RecipeList

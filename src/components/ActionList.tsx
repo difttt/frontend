@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import { Button, Card, Space, Table, Tag } from 'antd'
 import * as substrate from '../substrate'
 import Action from './Action'
@@ -58,15 +59,15 @@ const columns = [
     title: '操作',
     key: 'action',
     align: 'center',
-    render: (_, record) => (
+    render: (_: any) => (
       <Space size="middle">
         <a>Delete</a>
       </Space>
     ),
   },
-]
+] as any
 
-const ActionList = ({ actions, setActions }) => {
+const ActionList = ({ actions, setActions }: any) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -75,7 +76,7 @@ const ActionList = ({ actions, setActions }) => {
     setActions(actions)
   }
 
-  const createAction = async (data) => {
+  const createAction = async (data: any) => {
     setLoading(true)
     const action = await substrate.createAction(data)
 
@@ -124,6 +125,11 @@ const ActionList = ({ actions, setActions }) => {
       />
     </>
   )
+}
+
+ActionList.propTypes = {
+  actions: PropTypes.array,
+  setActions: PropTypes.func,
 }
 
 export default ActionList

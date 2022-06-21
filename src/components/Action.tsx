@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types'
 import { Form, Input, Modal, Select } from 'antd'
 
-const Action = ({ visible, onCreate, onCancel }) => {
+const Action = ({ visible, onCreate, onCancel }: any) => {
   const [form] = Form.useForm()
 
   return (
@@ -120,6 +121,12 @@ const Action = ({ visible, onCreate, onCancel }) => {
       </Form>
     </Modal>
   )
+}
+
+Action.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  onCreate: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 }
 
 export default Action

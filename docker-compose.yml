@@ -1,4 +1,4 @@
-version: "3.5"
+version: '3.5'
 networks:
   diftttnetwork:
     name: diftttnetwork
@@ -9,7 +9,7 @@ services:
     image: baidang201/difttt-node:latest
     working_dir: /var/www/node-template
     ports:
-      - "9944:9944"
+      - '9944:9944'
     volumes:
       - ./data:/data
     environment:
@@ -18,5 +18,5 @@ services:
     restart: always
     networks:
       diftttnetwork:
-        aliases: 
+        aliases:
           - diftttnetwork

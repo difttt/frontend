@@ -1,5 +1,6 @@
 import { Form, Modal, Select } from 'antd'
-const Recipe = ({ visible, triggers, actions, onCreate, onCancel }) => {
+import PropTypes from 'prop-types'
+const Recipe = ({ visible, triggers, actions, onCreate, onCancel }: any) => {
   const [form] = Form.useForm()
 
   return (
@@ -32,7 +33,7 @@ const Recipe = ({ visible, triggers, actions, onCreate, onCancel }) => {
         >
           <Select placeholder="Select a trigger">
             {
-              triggers.map((trigger) => {
+              triggers.map((trigger: any) => {
                 return (
                   <Select.Option key={trigger.id} value={trigger.id}>
                     {trigger.id}
@@ -49,7 +50,7 @@ const Recipe = ({ visible, triggers, actions, onCreate, onCancel }) => {
         >
           <Select placeholder="Select a action">
             {
-              actions.map((action) => {
+              actions.map((action: any) => {
                 return (
                   <Select.Option key={action.id} value={action.id}>
                     {action.id}
@@ -62,6 +63,14 @@ const Recipe = ({ visible, triggers, actions, onCreate, onCancel }) => {
       </Form>
     </Modal>
   )
+}
+
+Recipe.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  triggers: PropTypes.array.isRequired,
+  actions: PropTypes.array.isRequired,
+  onCreate: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 }
 
 export default Recipe

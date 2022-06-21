@@ -40,7 +40,7 @@ async function transfer(to: string, from: any, amount: number) {
   return hash
 }
 
-async function createTrigger(data) {
+async function createTrigger(data: any) {
   return new Promise((resolve) => {
     api.tx.templateModule.createTriger(data).signAndSend(Alice, ({ events = [], status }) => {
       if (status.isFinalized)
@@ -61,10 +61,10 @@ async function getTriggers() {
   for (const [key] of exposures) {
     const id = +key.args[1]
     const t = await api.query.templateModule.mapTriger(id)
-    const trigger = t.toHuman()
+    const trigger = t.toHuman() as any
     const { Timer, Schedule, PriceGT, PriceLT } = trigger
 
-    const res = {}
+    const res = {} as any
     if (Timer) {
       res.type = 'Timer'
       res.data = Timer
@@ -96,7 +96,7 @@ async function getTriggers() {
   return triggers
 }
 
-async function createAction(data) {
+async function createAction(data: any) {
   return new Promise((resolve) => {
     api.tx.templateModule.createAction(data).signAndSend(Alice, ({ events = [], status }) => {
       if (status.isFinalized)
@@ -120,7 +120,7 @@ async function getActions() {
   for (const [key] of exposures) {
     const id = +key.args[1]
     const t = await api.query.templateModule.mapAction(id)
-    const action = t.toHuman()
+    const action = t.toHuman() as any
     const { MailWithToken, Oracle } = action
 
     if (MailWithToken) {
@@ -147,7 +147,7 @@ async function getActions() {
   return actions
 }
 
-async function createRecipe(actionId, triggerId) {
+async function createRecipe(actionId: number, triggerId: number) {
   return new Promise((resolve) => {
     api.tx.templateModule
       .createRecipe(actionId, triggerId)
@@ -170,7 +170,7 @@ async function getRecipes() {
   for (const [key] of exposures) {
     const id = +key.args[1]
     const t = await api.query.templateModule.mapRecipe(id)
-    const recipe = t.toHuman()
+    const recipe = t.toHuman() as object
     recipes.push({
       ...recipe,
       key: id,
@@ -181,7 +181,7 @@ async function getRecipes() {
   return recipes
 }
 
-async function recipeTurnOn(id) {
+async function recipeTurnOn(id: number) {
   return new Promise((resolve) => {
     api.tx.templateModule
       .turnOnRecipe(id)
@@ -196,7 +196,7 @@ async function recipeTurnOn(id) {
   })
 }
 
-async function recipeTurnOff(id) {
+async function recipeTurnOff(id: number) {
   return new Promise((resolve) => {
     api.tx.templateModule
       .turnOffRecipe(id)

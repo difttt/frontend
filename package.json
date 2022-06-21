@@ -1,7 +1,7 @@
 {
   "name": "difttt-frontend",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -21,6 +21,7 @@
     "antd": "^4.21.0",
     "dayjs": "^1.11.3",
     "eslint": "^8.17.0",
+    "prop-types": "^15.8.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0"
@@ -35,6 +36,13 @@
   "eslintConfig": {
     "extends": [
       "@antfu"
-    ]
+    ],
+    "rules": {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "no-console": "off",
+      "unknown-property": "off",
+      "unknown-word": "off"
+    }
   }
 }
