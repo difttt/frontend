@@ -51,73 +51,70 @@ const Action = ({ visible, onCreate, onCancel }) => {
             if (actionType === 'MailWithToken') {
               return (
                 <>
+                <Form.Item
+                  label="Url"
+                  name="url"
+                  rules={[{ required: true, message: 'Please input your url!' }]}
+                >
+                  <Input placeholder="Url" />
+                </Form.Item>
 
-        <Form.Item
-          label="Url"
-          name="url"
-          rules={[{ required: true, message: 'Please input your url!' }]}
-        >
-          <Input placeholder="Url" />
-        </Form.Item>
+                <Form.Item
+                  label="Token"
+                  name="token"
+                  rules={[{ required: true, message: 'Please input your token!' }]}
+                >
+                  <Input placeholder="token" />
+                </Form.Item>
 
-        <Form.Item
-          label="Token"
-          name="token"
-          rules={[{ required: true, message: 'Please input your token!' }]}
-        >
-          <Input placeholder="token" />
-        </Form.Item>
+                <Form.Item
+                  label="receiver"
+                  name="receiver"
+                  rules={[{ required: true, message: 'Please input your receiver!' }]}
+                >
+                  <Input placeholder="receiver" />
+                </Form.Item>
 
-        <Form.Item
-          label="receiver"
-          name="receiver"
-          rules={[{ required: true, message: 'Please input your receiver!' }]}
-        >
-          <Input placeholder="receiver" />
-        </Form.Item>
+                <Form.Item
+                  label="Title"
+                  name="title"
+                  rules={[{ required: true, message: 'Please input your title!' }]}
+                >
+                  <Input placeholder="title" />
+                </Form.Item>
 
-        <Form.Item
-          label="Title"
-          name="title"
-          rules={[{ required: true, message: 'Please input your title!' }]}
-        >
-          <Input placeholder="title" />
-        </Form.Item>
+                <Form.Item
+                  label="Body"
+                  name="body"
+                  rules={[{ required: true, message: 'Please input your body!' }]}
+                >
+                  <Input placeholder="body" />
+                </Form.Item>
+                </>
+              )
+            }
+            else if (actionType === 'Oracle') {
+              return (
+                <>
+                  <Form.Item
+                    label="价格来源地址"
+                    name="url"
+                    rules={[{ required: true, message: 'Please input priceLT!' }]}
+                  >
+                    <Input placeholder="url" />
+                  </Form.Item>
 
-        <Form.Item
-          label="Body"
-          name="body"
-          rules={[{ required: true, message: 'Please input your body!' }]}
-        >
-          <Input placeholder="body" />
-        </Form.Item>
-        </>
-
-        )
-        }
-        else if (actionType === 'Oracle') {
-          return (
-            <>
-            <Form.Item
-              label="价格来源地址"
-              name="url"
-              rules={[{ required: true, message: 'Please input priceLT!' }]}
-            >
-              <Input placeholder="url" />
-            </Form.Item>
-
-          <Form.Item
-          label="Token名称"
-          name="name"
-          rules={[{ required: true, message: 'Please input priceLT!' }]}
-          >
-
-          <Input placeholder="token name"/>
-          </Form.Item>
-          </>
-          )
-        }
-      }}
+                  <Form.Item
+                  label="Token名称"
+                  name="name"
+                  rules={[{ required: true, message: 'Please input priceLT!' }]}
+                  >
+                    <Input placeholder="token name"/>
+                  </Form.Item>
+                </>
+              )
+            }
+          }}
       </Form.Item>
 
       </Form>

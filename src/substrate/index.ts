@@ -3,9 +3,9 @@ import { Keyring } from '@polkadot/keyring'
 import dayjs from 'dayjs'
 
 // 如没有运行 node-template，也可试连到波卡主网上： `wss://rpc.polkadot.io`.
-const provider = new WsProvider('ws://127.0.0.1:9944')
+// const provider = new WsProvider('ws://127.0.0.1:9944')
 // const provider = new WsProvider('wss://difttt.dmb.top/ws')
-// const provider = new WsProvider('ws://39.108.194.248:9944')
+const provider = new WsProvider('ws://39.108.194.248:9944')
 const api = await ApiPromise.create({ provider })
 
 // 获取用户
@@ -41,9 +41,16 @@ async function transfer(to: string, from: any, amount: number) {
 }
 
 async function createTrigger(data) {
-  const trigger = await api.tx.templateModule.createTriger(data)
-  const hash = await trigger.signAndSend(Alice)
-  return hash
+  return new Promise((resolve) => {
+    api.tx.templateModule.createTriger(data).signAndSend(Alice, ({ events = [], status }) => {
+      if (status.isFinalized)
+        resolve({ events, status })
+
+      events.forEach(({ phase, event: { data, method, section } }) => {
+        console.log(`${phase.toString()} : ${section}.${method} ${data.toString()}`)
+      })
+    })
+  })
 }
 
 async function getTriggers() {
@@ -90,9 +97,19 @@ async function getTriggers() {
 }
 
 async function createAction(data) {
-  const action = await api.tx.templateModule.createAction(data)
-  const hash = await action.signAndSend(Alice)
-  return hash
+  return new Promise((resolve) => {
+    api.tx.templateModule.createAction(data).signAndSend(Alice, ({ events = [], status }) => {
+      if (status.isFinalized)
+        resolve({ events, status })
+
+      else
+        console.log(`Status of transfer: ${status.type}`)
+
+      events.forEach(({ phase, event: { data, method, section } }) => {
+        console.log(`${phase.toString()} : ${section}.${method} ${data.toString()}`)
+      })
+    })
+  })
 }
 
 async function getActions() {
@@ -131,9 +148,18 @@ async function getActions() {
 }
 
 async function createRecipe(actionId, triggerId) {
-  const recipe = await api.tx.templateModule.createRecipe(actionId, triggerId)
-  const hash = await recipe.signAndSend(Alice)
-  return hash
+  return new Promise((resolve) => {
+    api.tx.templateModule
+      .createRecipe(actionId, triggerId)
+      .signAndSend(Alice, ({ events = [], status }) => {
+        if (status.isFinalized)
+          resolve({ events, status })
+
+        events.forEach(({ phase, event: { data, method, section } }) => {
+          console.log(`${phase.toString()} : ${section}.${method} ${data.toString()}`)
+        })
+      })
+  })
 }
 
 async function getRecipes() {
@@ -156,32 +182,32 @@ async function getRecipes() {
 }
 
 async function recipeTurnOn(id) {
-  // const ret = await api.tx.templateModule.turnOnRecipe(0)
-  await api.tx.templateModule.turnOnRecipe(id).signAndSend(Alice, ({ events = [], status }) => {
-    if (status.isFinalized)
-      console.log('Success', status.asFinalized.toHex())
+  return new Promise((resolve) => {
+    api.tx.templateModule
+      .turnOnRecipe(id)
+      .signAndSend(Alice, ({ events = [], status }) => {
+        if (status.isFinalized)
+          resolve({ events, status })
 
-    else
-      console.log(`Status of transfer: ${status.type}`)
-
-    events.forEach(({ phase, event: { data, method, section } }) => {
-      console.log(`${phase.toString()} : ${section}.${method} ${data.toString()}`)
-    })
+        events.forEach(({ phase, event: { data, method, section } }) => {
+          console.log(`${phase.toString()} : ${section}.${method} ${data.toString()}`)
+        })
+      })
   })
 }
 
 async function recipeTurnOff(id) {
-  // const ret = await api.tx.templateModule.turnOnRecipe(0)
-  await api.tx.templateModule.turnOffRecipe(id).signAndSend(Alice, ({ events = [], status }) => {
-    if (status.isFinalized)
-      console.log('Success', status.asFinalized.toHex())
+  return new Promise((resolve) => {
+    api.tx.templateModule
+      .turnOffRecipe(id)
+      .signAndSend(Alice, ({ events = [], status }) => {
+        if (status.isFinalized)
+          resolve({ events, status })
 
-    else
-      console.log(`Status of transfer: ${status.type}`)
-
-    events.forEach(({ phase, event: { data, method, section } }) => {
-      console.log(`${phase.toString()} : ${section}.${method} ${data.toString()}`)
-    })
+        events.forEach(({ phase, event: { data, method, section } }) => {
+          console.log(`${phase.toString()} : ${section}.${method} ${data.toString()}`)
+        })
+      })
   })
 }
 

@@ -6,6 +6,7 @@ import Recipe from './Recipe'
 const RecipeList = ({ triggers, actions }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [recipes, setRecipes] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const getRecipes = async () => {
     const recipes = await substrate.getRecipes()
@@ -13,18 +14,33 @@ const RecipeList = ({ triggers, actions }) => {
   }
 
   const createRecipe = async (actionId, triggerId) => {
-    await substrate.createRecipe(actionId, triggerId)
-    getRecipes()
+    setLoading(true)
+    const recipe = await substrate.createRecipe(actionId, triggerId)
+
+    if (recipe) {
+      setLoading(false)
+      getRecipes()
+    }
   }
 
   const recipeTurnOn = async (id) => {
-    await substrate.recipeTurnOn(id)
-    getRecipes()
+    setLoading(true)
+    const ret = await substrate.recipeTurnOn(id)
+
+    if (ret) {
+      setLoading(false)
+      getRecipes()
+    }
   }
 
   const recipeTurnOff = async (id) => {
-    await substrate.recipeTurnOff(id)
-    getRecipes()
+    setLoading(true)
+    const ret = await substrate.recipeTurnOff(id)
+
+    if (ret) {
+      setLoading(false)
+      getRecipes()
+    }
   }
 
   const columns = [
@@ -98,7 +114,7 @@ const RecipeList = ({ triggers, actions }) => {
             Add recipe
           </Button>
         </div>
-        <Table bordered columns={columns} dataSource={recipes} />
+        <Table loading={loading} bordered columns={columns} dataSource={recipes} />
       </Card>
 
       <Recipe

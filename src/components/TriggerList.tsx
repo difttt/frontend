@@ -54,7 +54,7 @@ const columns = [
 
 const TriggerList = ({ triggers, setTriggers }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
-  // const [triggers, setTriggers] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const getTriggers = async () => {
     const triggers = await substrate.getTriggers()
@@ -64,11 +64,11 @@ const TriggerList = ({ triggers, setTriggers }) => {
   }
 
   const createTrigger = async (data) => {
+    setLoading(true)
     const ret = await substrate.createTrigger(data)
     if (ret) {
-      setTimeout(() => {
-        getTriggers()
-      }, 2000)
+      setLoading(false)
+      getTriggers()
     }
   }
 
@@ -114,6 +114,7 @@ const TriggerList = ({ triggers, setTriggers }) => {
           </Button>
         </div>
         <Table
+          loading={loading}
           bordered
           columns={columns}
           dataSource={triggers}

@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1 style={{ textAlign: 'center' }}>DIFTTT</h1>
+      <h1 style={{ textAlign: 'center', color: 'white' }}>DIFTTT</h1>
 
       <TriggerList
         triggers={triggers}

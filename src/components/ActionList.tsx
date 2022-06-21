@@ -68,21 +68,21 @@ const columns = [
 
 const ActionList = ({ actions, setActions }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
-  // const [actions, setActions] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const getActions = async () => {
     const actions = await substrate.getActions()
     setActions(actions)
   }
 
-  const createAction = async (values) => {
-    const params = {
-      MailWithToken: [values.url, values.token, values.receiver, values.title, values.body],
-    }
-    const action = await substrate.createAction(params)
+  const createAction = async (data) => {
+    setLoading(true)
+    const action = await substrate.createAction(data)
 
-    if (action)
+    if (action) {
+      setLoading(false)
       getActions()
+    }
   }
 
   useEffect(() => {
@@ -93,12 +93,12 @@ const ActionList = ({ actions, setActions }) => {
     setIsModalVisible(true)
   }
   const handleOk = (values: any) => {
-    console.log('Received values of form: ', values)
     if (values.actionType === 'MailWithToken') {
       createAction({
         MailWithToken: [values.url, values.token, values.receiver, values.title, values.body],
       })
-    } else if (values.actionType === 'Oracle'){
+    }
+    else if (values.actionType === 'Oracle') {
       createAction({
         Oracle: [values.url, values.name],
       })
@@ -114,7 +114,7 @@ const ActionList = ({ actions, setActions }) => {
             Add Action
           </Button>
         </div>
-        <Table bordered columns={columns} dataSource={actions} />
+        <Table loading={loading} bordered columns={columns} dataSource={actions} />
       </Card>
 
       <Action
