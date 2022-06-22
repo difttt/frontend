@@ -41,6 +41,18 @@ const columns = [
     },
   },
   {
+    title: 'Indicator',
+    align: 'center',
+    dataIndex: 'indicator',
+    key: 'indicator',
+  },
+  {
+    title: 'Seconds',
+    align: 'center',
+    dataIndex: 'seconds',
+    key: 'seconds',
+  },
+  {
     title: 'Action',
     align: 'center',
     key: 'action',
@@ -100,6 +112,11 @@ const TriggerList = ({ triggers, setTriggers }: { triggers: any; setTriggers: an
     else if (values.triggerType === 'PriceLT') {
       createTrigger({
         PriceLT: [now, values.priceLT],
+      })
+    }
+    else if (values.triggerType === 'Arh999LT') {
+      createTrigger({
+        Arh999LT: [now, values.indicator, values.seconds],
       })
     }
     setIsModalVisible(false)
