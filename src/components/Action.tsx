@@ -38,8 +38,8 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
           rules={[{ required: true, message: 'Please input your action type!' }]}
         >
           <Select placeholder="Select a action type">
-            <Select.Option value="MailWithToken">邮件</Select.Option>
-            <Select.Option value="Oracle">合约</Select.Option>
+            <Select.Option value="MailWithToken">MailWithToken</Select.Option>
+            <Select.Option value="Oracle">Oracle</Select.Option>
           </Select>
         </Form.Item>
 
@@ -98,15 +98,15 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
               return (
                 <>
                   <Form.Item
-                    label="价格来源地址"
+                    label="Price Url"
                     name="url"
-                    rules={[{ required: true, message: 'Please input priceLT!' }]}
+                    rules={[{ required: true, message: 'Please input PriceUrl!' }]}
                   >
                     <Input placeholder="url" />
                   </Form.Item>
 
                   <Form.Item
-                  label="Token名称"
+                  label="Token Name"
                   name="name"
                   rules={[{ required: true, message: 'Please input priceLT!' }]}
                   >

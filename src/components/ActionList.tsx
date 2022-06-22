@@ -56,7 +56,7 @@ const columns = [
     align: 'center',
   },
   {
-    title: '操作',
+    title: 'Action',
     key: 'action',
     align: 'center',
     render: (_: any) => (
