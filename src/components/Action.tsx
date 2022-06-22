@@ -40,6 +40,7 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
           <Select placeholder="Select a action type">
             <Select.Option value="MailWithToken">邮件</Select.Option>
             <Select.Option value="Oracle">合约</Select.Option>
+            <Select.Option value="BuyToken">BuyToken</Select.Option>
           </Select>
         </Form.Item>
 
@@ -100,7 +101,7 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
                   <Form.Item
                     label="价格来源地址"
                     name="url"
-                    rules={[{ required: true, message: 'Please input priceLT!' }]}
+                    rules={[{ required: true, message: 'Please input url!' }]}
                   >
                     <Input placeholder="url" />
                   </Form.Item>
@@ -108,9 +109,38 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
                   <Form.Item
                   label="Token名称"
                   name="name"
-                  rules={[{ required: true, message: 'Please input priceLT!' }]}
+                  rules={[{ required: true, message: 'Please input name!' }]}
                   >
                     <Input placeholder="token name"/>
+                  </Form.Item>
+                </>
+              )
+            }
+            else if (actionType === 'BuyToken') {
+              return (
+                <>
+                  <Form.Item
+                    label="Address"
+                    name="address"
+                    rules={[{ required: true, message: 'Please input address!' }]}
+                  >
+                    <Input placeholder="address" />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="TokenName"
+                    name="token_name"
+                    rules={[{ required: true, message: 'Please input token_name!' }]}
+                  >
+                    <Input placeholder="token_name" />
+                  </Form.Item>
+
+                  <Form.Item
+                  label="Amount"
+                  name="amount"
+                  rules={[{ required: true, message: 'Please input amount!' }]}
+                  >
+                    <Input placeholder="amount"/>
                   </Form.Item>
                 </>
               )

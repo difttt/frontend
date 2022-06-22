@@ -56,6 +56,18 @@ const columns = [
     align: 'center',
   },
   {
+    title: 'Amount',
+    dataIndex: 'amount',
+    key: 'amount',
+    align: 'center',
+  },
+  {
+    title: 'Address',
+    dataIndex: 'address',
+    key: 'address',
+    align: 'center',
+  },
+  {
     title: '操作',
     key: 'action',
     align: 'center',
@@ -102,6 +114,11 @@ const ActionList = ({ actions, setActions }: any) => {
     else if (values.actionType === 'Oracle') {
       createAction({
         Oracle: [values.url, values.name],
+      })
+    }
+    else if (values.actionType === 'BuyToken') {
+      createAction({
+        BuyToken: [values.address, values.token_name, values.amount],
       })
     }
     setIsModalVisible(false)

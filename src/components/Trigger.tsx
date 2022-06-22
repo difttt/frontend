@@ -42,6 +42,7 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
             <Select.Option value="Schedule">定时触发</Select.Option>
             <Select.Option value="PriceGT">价格上限触发</Select.Option>
             <Select.Option value="PriceLT">价格下限触发</Select.Option>
+            <Select.Option value="Arh999LT">Arh999 less than</Select.Option>
           </Select>
         </Form.Item>
 
@@ -93,6 +94,27 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
                 >
                   <Input placeholder="PriceLT" />
                 </Form.Item>
+              )
+            }
+            else if (triggerType === 'Arh999LT') {
+              return (
+                <>
+                  <Form.Item
+                    label="indicator"
+                    name="indicator"
+                    rules={[{ required: true, message: 'Please input indicator!' }]}
+                  >
+                    <Input placeholder="Arh999LT indicator" />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="seconds"
+                    name="seconds"
+                    rules={[{ required: true, message: 'Please input seconds!' }]}
+                  >
+                    <Input placeholder="Minimum seconds between buy" />
+                  </Form.Item>
+              </>
               )
             }
           }}
