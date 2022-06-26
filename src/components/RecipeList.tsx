@@ -52,8 +52,8 @@ const RecipeList = ({ triggers, actions }: any) => {
       align: 'center',
     },
     {
-      title: 'TrigerID',
-      dataIndex: 'trigerId',
+      title: 'TriggerID',
+      dataIndex: 'triggerId',
       key: 'trigerId',
       align: 'center',
     },
@@ -86,6 +86,7 @@ const RecipeList = ({ triggers, actions }: any) => {
     {
       title: 'Action',
       key: 'action',
+      align: 'center',
       render: (_: any, record: any) => (
         <Space size="middle">
           <a onClick={() => { recipeTurnOn(record.id) }}>TurnOn</a>

@@ -38,6 +38,18 @@ const columns = [
       }
       else if (record.type === 'PriceGT') { return `PriceGT：${text}` }
       else if (record.type === 'PriceLT') { return `PriceLT：${text}` }
+      else if (record.type === 'Arh999LT') {
+        const weekSeconds = 7 * 24 * 60 * 60
+        const monthSeconds = 30 * 24 * 60 * 60
+        let cycle = ''
+        if (weekSeconds === record.seconds)
+          cycle = 'Week'
+
+        else if (monthSeconds === record.seconds)
+          cycle = 'Month'
+
+        return `When price less than ${record.indicator}, Automatic Investment per ${cycle}`
+      }
     },
   },
   {
@@ -47,10 +59,19 @@ const columns = [
     key: 'indicator',
   },
   {
-    title: 'Seconds',
+    title: 'Cycle',
     align: 'center',
     dataIndex: 'seconds',
     key: 'seconds',
+    render: (seconds: number) => {
+      const weekSeconds = 7 * 24 * 60 * 60
+      const monthSeconds = 30 * 24 * 60 * 60
+      if (weekSeconds === seconds)
+        return 'Week'
+
+      else if (monthSeconds === seconds)
+        return 'Month'
+    },
   },
   {
     title: 'Action',
@@ -92,7 +113,7 @@ const TriggerList = ({ triggers, setTriggers }: { triggers: any; setTriggers: an
     setIsModalVisible(true)
   }
   const handleOk = (values: any) => {
-    const now = Math.floor(new Date().getTime()/1000)
+    const now = Math.floor(new Date().getTime() / 1000)
 
     if (values.triggerType === 'Timer') {
       createTrigger({

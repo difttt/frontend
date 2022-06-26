@@ -97,10 +97,12 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
               )
             }
             else if (triggerType === 'Arh999LT') {
+              const weekSeconds = 60 * 60 * 24 * 7
+              const monthSeconds = 60 * 60 * 24 * 30
               return (
                 <>
                   <Form.Item
-                    label="indicator"
+                    label="Indicator"
                     name="indicator"
                     rules={[{ required: true, message: 'Please input indicator!' }]}
                   >
@@ -108,11 +110,14 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
                   </Form.Item>
 
                   <Form.Item
-                    label="seconds"
+                    label="Cycle"
                     name="seconds"
                     rules={[{ required: true, message: 'Please input seconds!' }]}
                   >
-                    <Input placeholder="Minimum seconds between buy" />
+                    <Select placeholder="Select a seconds">
+                      <Select.Option value={weekSeconds}>Week</Select.Option>
+                      <Select.Option value={monthSeconds}>Month</Select.Option>
+                    </Select>
                   </Form.Item>
               </>
               )
