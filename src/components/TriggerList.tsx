@@ -63,13 +63,15 @@ const columns = [
     align: 'center',
     dataIndex: 'seconds',
     key: 'seconds',
-    render: (seconds: number) => {
+    render: (seconds: string) => {
+      // 604,800
+      const num = +seconds.split(',').join('')
       const weekSeconds = 7 * 24 * 60 * 60
       const monthSeconds = 30 * 24 * 60 * 60
-      if (weekSeconds === seconds)
+      if (weekSeconds === num)
         return 'Week'
 
-      else if (monthSeconds === seconds)
+      else if (monthSeconds === num)
         return 'Month'
     },
   },

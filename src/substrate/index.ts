@@ -3,9 +3,9 @@ import { Keyring } from '@polkadot/keyring'
 import dayjs from 'dayjs'
 
 // 如没有运行 node-template，也可试连到波卡主网上： `wss://rpc.polkadot.io`.
-// const provider = new WsProvider('ws://127.0.0.1:9944')
+const provider = new WsProvider('ws://127.0.0.1:9944')
 // const provider = new WsProvider('wss://difttt.dmb.top/ws')
-const provider = new WsProvider('ws://39.108.194.248:9944')
+// const provider = new WsProvider('ws://39.108.194.248:9944')
 const api = await ApiPromise.create({ provider })
 
 // 获取用户
@@ -15,6 +15,7 @@ function getUser(userName: string) {
   return user
 }
 const Alice = getUser('Alice')
+console.log(Alice.address)
 
 async function getChainInfo() {
   // 1. 查看本条链的信息
