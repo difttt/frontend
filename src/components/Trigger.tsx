@@ -97,6 +97,7 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
               )
             }
             else if (triggerType === 'Arh999LT') {
+              const per10Seconds = 10
               const weekSeconds = 60 * 60 * 24 * 7
               const monthSeconds = 60 * 60 * 24 * 30
               return (
@@ -115,6 +116,7 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
                     rules={[{ required: true, message: 'Please select investment cycle!' }]}
                   >
                     <Select placeholder="Select a investment cycle">
+                      <Select.Option value={per10Seconds}>Per 10 Seconds</Select.Option>
                       <Select.Option value={weekSeconds}>Per Week</Select.Option>
                       <Select.Option value={monthSeconds}>Per Month</Select.Option>
                     </Select>
