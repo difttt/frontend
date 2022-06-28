@@ -11,6 +11,7 @@ const RecipeList = ({ triggers, actions }: any) => {
 
   const getRecipes = async () => {
     const recipes = await substrate.getRecipes() as any
+
     setRecipes(recipes)
   }
 
@@ -53,7 +54,7 @@ const RecipeList = ({ triggers, actions }: any) => {
     },
     {
       title: 'TriggerID',
-      dataIndex: 'triggerId',
+      dataIndex: 'trigerId',
       key: 'trigerId',
       align: 'center',
     },

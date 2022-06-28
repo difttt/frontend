@@ -112,11 +112,11 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
                   <Form.Item
                     label="Cycle"
                     name="seconds"
-                    rules={[{ required: true, message: 'Please input seconds!' }]}
+                    rules={[{ required: true, message: 'Please select investment cycle!' }]}
                   >
-                    <Select placeholder="Select a seconds">
-                      <Select.Option value={weekSeconds}>Week</Select.Option>
-                      <Select.Option value={monthSeconds}>Month</Select.Option>
+                    <Select placeholder="Select a investment cycle">
+                      <Select.Option value={weekSeconds}>Per Week</Select.Option>
+                      <Select.Option value={monthSeconds}>Per Month</Select.Option>
                     </Select>
                   </Form.Item>
               </>

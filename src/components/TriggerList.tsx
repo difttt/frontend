@@ -22,7 +22,9 @@ const columns = [
     align: 'center',
     dataIndex: 'createdTime',
     key: 'createdTime',
-    render: (text: string) => dayjs(text).format('YYYY-MM-DD HH:mm:ss'),
+    render: (text: string) => {
+      return dayjs(text).format('YYYY-MM-DD HH:mm:ss')
+    },
   },
   {
     title: 'Trigger Condition',
@@ -39,42 +41,43 @@ const columns = [
       else if (record.type === 'PriceGT') { return `PriceGT：${text}` }
       else if (record.type === 'PriceLT') { return `PriceLT：${text}` }
       else if (record.type === 'Arh999LT') {
+        const num = +record.seconds.split(',').join('')
         const weekSeconds = 7 * 24 * 60 * 60
         const monthSeconds = 30 * 24 * 60 * 60
         let cycle = ''
-        if (weekSeconds === record.seconds)
+        if (weekSeconds === num)
           cycle = 'Week'
 
-        else if (monthSeconds === record.seconds)
+        else if (monthSeconds === num)
           cycle = 'Month'
 
-        return `When price less than ${record.indicator}, Automatic Investment per ${cycle}`
+        return `When Indicator less than ${record.indicator}, Automatic Investment per ${cycle}`
       }
     },
   },
-  {
-    title: 'Indicator',
-    align: 'center',
-    dataIndex: 'indicator',
-    key: 'indicator',
-  },
-  {
-    title: 'Cycle',
-    align: 'center',
-    dataIndex: 'seconds',
-    key: 'seconds',
-    render: (seconds: string) => {
-      // 604,800
-      const num = +seconds.split(',').join('')
-      const weekSeconds = 7 * 24 * 60 * 60
-      const monthSeconds = 30 * 24 * 60 * 60
-      if (weekSeconds === num)
-        return 'Week'
+  // {
+  //   title: 'Indicator',
+  //   align: 'center',
+  //   dataIndex: 'indicator',
+  //   key: 'indicator',
+  // },
+  // {
+  //   title: 'Cycle',
+  //   align: 'center',
+  //   dataIndex: 'seconds',
+  //   key: 'seconds',
+  //   render: (seconds: string) => {
+  //     // 604,800
+  //     const num = +seconds.split(',').join('')
+  //     const weekSeconds = 7 * 24 * 60 * 60
+  //     const monthSeconds = 30 * 24 * 60 * 60
+  //     if (weekSeconds === num)
+  //       return 'Week'
 
-      else if (monthSeconds === num)
-        return 'Month'
-    },
-  },
+  //     else if (monthSeconds === num)
+  //       return 'Month'
+  //   },
+  // },
   {
     title: 'Action',
     align: 'center',
@@ -93,7 +96,7 @@ const TriggerList = ({ triggers, setTriggers }: { triggers: any; setTriggers: an
 
   const getTriggers = async () => {
     const triggers = await substrate.getTriggers()
-
+    console.log(triggers)
     if (triggers)
       setTriggers(triggers)
   }

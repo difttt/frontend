@@ -144,13 +144,16 @@ async function getActions() {
     else if (Oracle) {
       action.type = 'Oracle'
       action.url = Oracle[0]
-      action.token_name = Oracle[1]
+      action.token = Oracle[1]
     }
     else if (BuyToken) {
+      console.log(BuyToken)
       action.type = 'BuyToken'
       action.address = BuyToken[0]
-      action.token_name = BuyToken[1]
+      action.sellTokenName = BuyToken[1]
       action.amount = BuyToken[2]
+      action.buyTokenName = BuyToken[3]
+      action.receiver = BuyToken[4]
     }
 
     actions.push({
