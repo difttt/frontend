@@ -10,12 +10,15 @@ const columns = [
     dataIndex: 'id',
     key: 'id',
     align: 'center',
+    fixed: 'left',
+    width: 80,
   },
   {
     title: 'Type',
     dataIndex: 'type',
     key: 'type',
     align: 'center',
+    width: 150,
     render: (text: string) => `${text}`,
   },
   {
@@ -23,6 +26,7 @@ const columns = [
     dataIndex: 'receiver',
     key: 'receiver',
     align: 'center',
+    minWidth: 200,
   },
   {
     title: 'Mail/Oracle URL',
@@ -76,6 +80,7 @@ const columns = [
     title: 'Action',
     key: 'action',
     align: 'center',
+    fixed: 'right',
     render: (_: any) => (
       <Space size="middle">
         <a>Delete</a>
@@ -148,6 +153,7 @@ const ActionList = ({ actions, setActions }: any) => {
           bordered
           columns={columns}
           dataSource={actions}
+          scroll={{ x: 1400 }}
         />
       </Card>
 

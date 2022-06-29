@@ -42,6 +42,7 @@ const columns = [
       else if (record.type === 'PriceLT') { return `PriceLT：${text}` }
       else if (record.type === 'Arh999LT') {
         const num = +record.seconds.split(',').join('')
+        const per10Seconds = 10
         const weekSeconds = 7 * 24 * 60 * 60
         const monthSeconds = 30 * 24 * 60 * 60
         let cycle = ''
@@ -51,7 +52,13 @@ const columns = [
         else if (monthSeconds === num)
           cycle = 'Month'
 
+        else if (per10Seconds === num)
+          cycle = '10 Seconds'
+
         return `When Indicator less than ${record.indicator}, Automatic Investment per ${cycle}`
+      }
+      else if (record.type === 'TransferProtect') {
+        return `When transfer amount max than ${record.maxAmount},Or transfer count max than ${record.maxCount}`
       }
     },
   },
@@ -144,6 +151,11 @@ const TriggerList = ({ triggers, setTriggers }: { triggers: any; setTriggers: an
     else if (values.triggerType === 'Arh999LT') {
       createTrigger({
         Arh999LT: [now, values.indicator, values.seconds],
+      })
+    }
+    else if (values.triggerType === 'TransferProtect') {
+      createTrigger({
+        TransferProtect: [now, values.maxAmount, values.maxCount],
       })
     }
     setIsModalVisible(false)

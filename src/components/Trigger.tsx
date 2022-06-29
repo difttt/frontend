@@ -43,6 +43,7 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
             <Select.Option value="PriceGT">PriceGT</Select.Option>
             <Select.Option value="PriceLT">PriceLT</Select.Option>
             <Select.Option value="Arh999LT">Arh999 less than</Select.Option>
+            <Select.Option value="TransferProtect">TransferProtect</Select.Option>
           </Select>
         </Form.Item>
 
@@ -121,7 +122,28 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
                       <Select.Option value={monthSeconds}>Per Month</Select.Option>
                     </Select>
                   </Form.Item>
-              </>
+                </>
+              )
+            }
+            else if (triggerType === 'TransferProtect') {
+              return (
+                <>
+                  <Form.Item
+                    label="MaxAmount"
+                    name="maxAmount"
+                    rules={[{ required: true, message: 'Please input max amount!' }]}
+                  >
+                    <Input placeholder="Transfer Max Amount" type="number" />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="MaxCount"
+                    name="maxCount"
+                    rules={[{ required: true, message: 'Please input transfer max count!' }]}
+                  >
+                    <Input placeholder="Transfer Max Count" type="number" />
+                  </Form.Item>
+                </>
               )
             }
           }}
