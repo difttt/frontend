@@ -69,7 +69,15 @@ async function getTriggers() {
     const id = +key.args[1]
     const t = await api.query.diftttModule.mapTriger(id)
     const trigger = t.toHuman() as any
-    const { Timer, Schedule, PriceGT, PriceLT, Arh999LT, TransferProtect }
+    const {
+      Timer,
+      Schedule,
+      PriceGT,
+      PriceLT,
+      Arh999LT,
+      TransferProtect,
+      OakTimer,
+    }
       = trigger
 
     const res = {} as any
@@ -104,6 +112,12 @@ async function getTriggers() {
       res.data = TransferProtect
       res.maxAmount = res.data[1]
       res.maxCount = res.data[2]
+    }
+    else if (OakTimer) {
+      res.type = 'OakTimer'
+      res.data = OakTimer
+      res.cycle_seconds = res.data[1]
+      res.repeat_times = res.data[2]
     }
 
     const time = +res.data[0].split(',').join('')

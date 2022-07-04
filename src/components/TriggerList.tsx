@@ -60,6 +60,9 @@ const columns = [
       else if (record.type === 'TransferProtect') {
         return `When transfer amount max than ${record.maxAmount},Or transfer count max than ${record.maxCount}`
       }
+      else if (record.type === 'OakTimer') {
+        return `OakTimer：${record.cycle_seconds} seconds, Repeat ${record.repeat_times} times`
+      }
     },
   },
   // {
@@ -156,6 +159,11 @@ const TriggerList = ({ triggers, setTriggers }: { triggers: any; setTriggers: an
     else if (values.triggerType === 'TransferProtect') {
       createTrigger({
         TransferProtect: [now, values.maxAmount, values.maxCount],
+      })
+    }
+    else if (values.triggerType === 'OakTimer') {
+      createTrigger({
+        TransferProtect: [now, values.cycle_seconds, values.repeat_times],
       })
     }
     setIsModalVisible(false)

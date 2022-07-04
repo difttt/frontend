@@ -1,8 +1,8 @@
-import { DatePicker, Form, Input, Modal, Select } from "antd";
-import PropTypes from "prop-types";
+import { DatePicker, Form, Input, Modal, Select } from 'antd'
+import PropTypes from 'prop-types'
 
 const Trigger = ({ visible, onCreate, onCancel }: any) => {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
 
   return (
     <Modal
@@ -15,12 +15,12 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
         form
           .validateFields()
           .then((values) => {
-            form.resetFields();
-            onCreate(values);
+            form.resetFields()
+            onCreate(values)
           })
           .catch((info) => {
-            console.error("Validate Failed:", info);
-          });
+            console.error('Validate Failed:', info)
+          })
       }}
     >
       <Form
@@ -28,15 +28,15 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
         form={form}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 14 }}
-        initialValues={{ triggerType: "" }}
+        initialValues={{ triggerType: '' }}
         autoComplete="off"
-        style={{ padding: "20px" }}
+        style={{ padding: '20px' }}
       >
         <Form.Item
           label="Type"
           name="triggerType"
           rules={[
-            { required: true, message: "Please input your triggerType!" },
+            { required: true, message: 'Please input your triggerType!' },
           ]}
         >
           <Select placeholder="Select a trigger type">
@@ -48,6 +48,7 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
             <Select.Option value="TransferProtect">
               TransferProtect
             </Select.Option>
+            <Select.Option value="OakTimer">OakTimer</Select.Option>
           </Select>
         </Form.Item>
 
@@ -58,60 +59,64 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
           }
         >
           {({ getFieldValue }) => {
-            const triggerType = getFieldValue("triggerType");
-            if (triggerType === "Timer") {
+            const triggerType = getFieldValue('triggerType')
+            if (triggerType === 'Timer') {
               return (
                 <Form.Item
                   label="Interval"
                   name="interval"
-                  rules={[{ required: true, message: "Please input timer!" }]}
+                  rules={[{ required: true, message: 'Please input timer!' }]}
                 >
                   <Input placeholder="Interval" addonAfter="S" />
                 </Form.Item>
-              );
-            } else if (triggerType === "Schedule") {
+              )
+            }
+            else if (triggerType === 'Schedule') {
               return (
                 <Form.Item
                   label="schedule"
                   name="schedule"
                   rules={[
-                    { required: true, message: "Please input schedule!" },
+                    { required: true, message: 'Please input schedule!' },
                   ]}
                 >
                   <DatePicker showTime />
                 </Form.Item>
-              );
-            } else if (triggerType === "PriceGT") {
+              )
+            }
+            else if (triggerType === 'PriceGT') {
               return (
                 <Form.Item
                   label="PriceGT"
                   name="priceGT"
-                  rules={[{ required: true, message: "Please input priceGT!" }]}
+                  rules={[{ required: true, message: 'Please input priceGT!' }]}
                 >
                   <Input placeholder="PriceGT" />
                 </Form.Item>
-              );
-            } else if (triggerType === "PriceLT") {
+              )
+            }
+            else if (triggerType === 'PriceLT') {
               return (
                 <Form.Item
                   label="PriceLT"
                   name="priceLT"
-                  rules={[{ required: true, message: "Please input priceLT!" }]}
+                  rules={[{ required: true, message: 'Please input priceLT!' }]}
                 >
                   <Input placeholder="PriceLT" />
                 </Form.Item>
-              );
-            } else if (triggerType === "Arh999LT") {
-              const per10Seconds = 10;
-              const weekSeconds = 60 * 60 * 24 * 7;
-              const monthSeconds = 60 * 60 * 24 * 30;
+              )
+            }
+            else if (triggerType === 'Arh999LT') {
+              const per10Seconds = 10
+              const weekSeconds = 60 * 60 * 24 * 7
+              const monthSeconds = 60 * 60 * 24 * 30
               return (
                 <>
                   <Form.Item
                     label="Indicator"
                     name="indicator"
                     rules={[
-                      { required: true, message: "Please input indicator!" },
+                      { required: true, message: 'Please input indicator!' },
                     ]}
                   >
                     <Input placeholder="Arh999LT indicator" />
@@ -123,7 +128,7 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
                     rules={[
                       {
                         required: true,
-                        message: "Please select investment cycle!",
+                        message: 'Please select investment cycle!',
                       },
                     ]}
                   >
@@ -140,8 +145,9 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
                     </Select>
                   </Form.Item>
                 </>
-              );
-            } else if (triggerType === "TransferProtect") {
+              )
+            }
+            else if (triggerType === 'TransferProtect') {
               return (
                 <>
                   <Form.Item
@@ -150,7 +156,7 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input single transaction limit!",
+                        message: 'Please input single transaction limit!',
                       },
                     ]}
                   >
@@ -166,7 +172,7 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input transfer max count!",
+                        message: 'Please input transfer max count!',
                       },
                     ]}
                   >
@@ -176,19 +182,55 @@ const Trigger = ({ visible, onCreate, onCancel }: any) => {
                     />
                   </Form.Item>
                 </>
-              );
+              )
+            }
+            else if (triggerType === 'OakTimer') {
+              return (
+                <>
+                  <Form.Item
+                    label="CycleSeconds"
+                    name="cycle_seconds"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input single cycle seconds!',
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="cycle seconds"
+                      type="number"
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="RepeatTimes"
+                    name="repeat_times"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input RepeatTimes!',
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Repeat Times"
+                      type="number"
+                    />
+                  </Form.Item>
+                </>
+              )
             }
           }}
         </Form.Item>
       </Form>
     </Modal>
-  );
-};
+  )
+}
 
 Trigger.propTypes = {
   visible: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-};
+}
 
-export default Trigger;
+export default Trigger
