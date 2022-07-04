@@ -163,7 +163,7 @@ const TriggerList = ({ triggers, setTriggers }: { triggers: any; setTriggers: an
     }
     else if (values.triggerType === 'OakTimer') {
       createTrigger({
-        TransferProtect: [now, values.cycle_seconds, values.repeat_times],
+        OakTimer: [now, values.cycle_seconds, values.repeat_times],
       })
     }
     setIsModalVisible(false)

@@ -43,6 +43,7 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
             <Select.Option value="MailWithToken">MailWithAsset</Select.Option>
             <Select.Option value="Oracle">Oracle</Select.Option>
             <Select.Option value="BuyToken">BuyAsset</Select.Option>
+            <Select.Option value="Slack">Slack</Select.Option>
           </Select>
         </Form.Item>
 
