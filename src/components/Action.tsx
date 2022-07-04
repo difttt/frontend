@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
-import { Form, Input, Modal, Select } from "antd";
+import PropTypes from 'prop-types'
+import { Form, Input, Modal, Select } from 'antd'
 
 const Action = ({ visible, onCreate, onCancel }: any) => {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
 
   return (
     <Modal
@@ -15,12 +15,12 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
         form
           .validateFields()
           .then((values) => {
-            form.resetFields();
-            onCreate(values);
+            form.resetFields()
+            onCreate(values)
           })
           .catch((info) => {
-            console.error("Validate Failed:", info);
-          });
+            console.error('Validate Failed:', info)
+          })
       }}
     >
       <Form
@@ -28,15 +28,15 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
         form={form}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 14 }}
-        initialValues={{ actionType: "" }}
+        initialValues={{ actionType: '' }}
         autoComplete="off"
-        style={{ padding: "20px" }}
+        style={{ padding: '20px' }}
       >
         <Form.Item
           label="Action Type"
           name="actionType"
           rules={[
-            { required: true, message: "Please input your action type!" },
+            { required: true, message: 'Please input your action type!' },
           ]}
         >
           <Select placeholder="Select a action type">
@@ -53,15 +53,15 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
           }
         >
           {({ getFieldValue }) => {
-            const actionType = getFieldValue("actionType");
-            if (actionType === "MailWithToken") {
+            const actionType = getFieldValue('actionType')
+            if (actionType === 'MailWithToken') {
               return (
                 <>
                   <Form.Item
                     label="Url"
                     name="url"
                     rules={[
-                      { required: true, message: "Please input your url!" },
+                      { required: true, message: 'Please input your url!' },
                     ]}
                   >
                     <Input placeholder="Url" />
@@ -71,7 +71,7 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
                     label="Asset"
                     name="token"
                     rules={[
-                      { required: true, message: "Please input your token!" },
+                      { required: true, message: 'Please input your token!' },
                     ]}
                   >
                     <Input placeholder="token" />
@@ -83,7 +83,7 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input your receiver!",
+                        message: 'Please input your receiver!',
                       },
                     ]}
                   >
@@ -94,7 +94,7 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
                     label="Title"
                     name="title"
                     rules={[
-                      { required: true, message: "Please input your title!" },
+                      { required: true, message: 'Please input your title!' },
                     ]}
                   >
                     <Input placeholder="title" />
@@ -104,20 +104,21 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
                     label="Message"
                     name="body"
                     rules={[
-                      { required: true, message: "Please input your body!" },
+                      { required: true, message: 'Please input your body!' },
                     ]}
                   >
                     <Input placeholder="body" />
                   </Form.Item>
                 </>
-              );
-            } else if (actionType === "Oracle") {
+              )
+            }
+            else if (actionType === 'Oracle') {
               return (
                 <>
                   <Form.Item
                     label="Price Url"
                     name="url"
-                    rules={[{ required: true, message: "Please input Url!" }]}
+                    rules={[{ required: true, message: 'Please input Url!' }]}
                   >
                     <Input placeholder="url" />
                   </Form.Item>
@@ -125,20 +126,21 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
                   <Form.Item
                     label="Token Name"
                     name="name"
-                    rules={[{ required: true, message: "Please input name!" }]}
+                    rules={[{ required: true, message: 'Please input name!' }]}
                   >
                     <Input placeholder="token name" />
                   </Form.Item>
                 </>
-              );
-            } else if (actionType === "BuyToken") {
+              )
+            }
+            else if (actionType === 'BuyToken') {
               return (
                 <>
                   <Form.Item
                     label="Address"
                     name="address"
                     rules={[
-                      { required: true, message: "Please input address!" },
+                      { required: true, message: 'Please input address!' },
                     ]}
                   >
                     <Input placeholder="address" />
@@ -150,7 +152,7 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input SellTokenName!",
+                        message: 'Please input SellTokenName!',
                       },
                     ]}
                   >
@@ -161,7 +163,7 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
                     label="SellAmount"
                     name="amount"
                     rules={[
-                      { required: true, message: "Please input amount!" },
+                      { required: true, message: 'Please input amount!' },
                     ]}
                   >
                     <Input placeholder="amount" type="number" />
@@ -171,7 +173,7 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
                     label="BuyTokenName"
                     name="buyTokenName"
                     rules={[
-                      { required: true, message: "Please input BuyTokenName!" },
+                      { required: true, message: 'Please input BuyTokenName!' },
                     ]}
                   >
                     <Input placeholder="BuyTokenName" />
@@ -183,26 +185,56 @@ const Action = ({ visible, onCreate, onCancel }: any) => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input ReceiverEmail!",
+                        message: 'Please input ReceiverEmail!',
                       },
                     ]}
                   >
                     <Input placeholder="ReceiverEmail" />
                   </Form.Item>
                 </>
-              );
+              )
+            }
+            else if (actionType === 'Slack') {
+              return (
+                <>
+                  <Form.Item
+                    label="SlackHookUrl"
+                    name="slack_hook_url"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input SlackHookUrl!',
+                      },
+                    ]}
+                  >
+                    <Input placeholder="SlackHookUrl" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Message"
+                    name="message"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input message!',
+                      },
+                    ]}
+                  >
+                    <Input placeholder="message" />
+                  </Form.Item>
+                </>
+              )
             }
           }}
         </Form.Item>
       </Form>
     </Modal>
-  );
-};
+  )
+}
 
 Action.propTypes = {
   visible: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-};
+}
 
-export default Action;
+export default Action

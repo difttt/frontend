@@ -77,6 +77,18 @@ const columns = [
     align: "center",
   },
   {
+    title: "SlackHookUrl",
+    dataIndex: "slack_hook_url",
+    key: "slack_hook_url",
+    align: "center",
+  },
+  {
+    title: "SlackMessage",
+    dataIndex: "message",
+    key: "message",
+    align: "center",
+  },
+  {
     title: "Action",
     key: "action",
     align: "center",
@@ -140,6 +152,12 @@ const ActionList = ({ actions, setActions }: any) => {
           values.receiverEmail,
         ],
       });
+    } else if (values.actionType === "Slack") {
+      createAction({
+        Slack: [values.slack_hook_url, values.message],
+      });
+    }
+
     }
     setIsModalVisible(false);
   };
