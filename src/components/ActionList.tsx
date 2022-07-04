@@ -1,134 +1,134 @@
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Button, Card, Space, Table, Tag } from "antd";
-import * as substrate from "../substrate";
-import Action from "./Action";
+import { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import { Button, Card, Space, Table, Tag } from 'antd'
+import * as substrate from '../substrate'
+import Action from './Action'
 
 const columns = [
   {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    align: "center",
-    fixed: "left",
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
+    align: 'center',
+    fixed: 'left',
     width: 80,
   },
   {
-    title: "Type",
-    dataIndex: "type",
-    key: "type",
-    align: "center",
+    title: 'Type',
+    dataIndex: 'type',
+    key: 'type',
+    align: 'center',
     width: 150,
     render: (text: string) => `${text}`,
   },
   {
-    title: "ReceiverEmail",
-    dataIndex: "receiver",
-    key: "receiver",
-    align: "center",
+    title: 'ReceiverEmail',
+    dataIndex: 'receiver',
+    key: 'receiver',
+    align: 'center',
     minWidth: 200,
   },
   {
-    title: "Mail/Oracle URL",
-    dataIndex: "url",
-    key: "url",
-    align: "center",
+    title: 'Mail/Oracle URL',
+    dataIndex: 'url',
+    key: 'url',
+    align: 'center',
   },
   {
-    title: "Mail/Oracle Asset",
-    dataIndex: "token",
-    key: "token",
-    align: "center",
+    title: 'Mail/Oracle Asset',
+    dataIndex: 'token',
+    key: 'token',
+    align: 'center',
   },
   {
-    title: "MailTitle",
-    dataIndex: "title",
-    key: "title",
-    align: "center",
+    title: 'MailTitle',
+    dataIndex: 'title',
+    key: 'title',
+    align: 'center',
   },
   {
-    title: "MailBody",
-    dataIndex: "body",
-    key: "body",
-    align: "center",
+    title: 'MailBody',
+    dataIndex: 'body',
+    key: 'body',
+    align: 'center',
   },
   {
-    title: "SellAsset",
-    dataIndex: "sellTokenName",
-    key: "sellTokenName",
-    align: "center",
+    title: 'SellAsset',
+    dataIndex: 'sellTokenName',
+    key: 'sellTokenName',
+    align: 'center',
   },
   {
-    title: "SellAmount",
-    dataIndex: "amount",
-    key: "amount",
-    align: "center",
+    title: 'SellAmount',
+    dataIndex: 'amount',
+    key: 'amount',
+    align: 'center',
   },
   {
-    title: "BuyAsset",
-    dataIndex: "buyTokenName",
-    key: "buyTokenName",
-    align: "center",
+    title: 'BuyAsset',
+    dataIndex: 'buyTokenName',
+    key: 'buyTokenName',
+    align: 'center',
   },
   {
-    title: "BuyAddress",
-    dataIndex: "address",
-    key: "address",
-    align: "center",
+    title: 'BuyAddress',
+    dataIndex: 'address',
+    key: 'address',
+    align: 'center',
   },
   {
-    title: "SlackHookUrl",
-    dataIndex: "slack_hook_url",
-    key: "slack_hook_url",
-    align: "center",
+    title: 'SlackHookUrl',
+    dataIndex: 'slack_hook_url',
+    key: 'slack_hook_url',
+    align: 'center',
   },
   {
-    title: "SlackMessage",
-    dataIndex: "message",
-    key: "message",
-    align: "center",
+    title: 'SlackMessage',
+    dataIndex: 'message',
+    key: 'message',
+    align: 'center',
   },
   {
-    title: "Action",
-    key: "action",
-    align: "center",
-    fixed: "right",
+    title: 'Action',
+    key: 'action',
+    align: 'center',
+    fixed: 'right',
     render: (_: any) => (
       <Space size="middle">
         <a>Delete</a>
       </Space>
     ),
   },
-] as any;
+] as any
 
 const ActionList = ({ actions, setActions }: any) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const getActions = async () => {
-    const actions = await substrate.getActions();
-    setActions(actions);
-  };
+    const actions = await substrate.getActions()
+    setActions(actions)
+  }
 
   const createAction = async (data: any) => {
-    setLoading(true);
-    const action = await substrate.createAction(data);
+    setLoading(true)
+    const action = await substrate.createAction(data)
 
     if (action) {
-      setLoading(false);
-      getActions();
+      setLoading(false)
+      getActions()
     }
-  };
+  }
 
   useEffect(() => {
-    getActions();
-  }, []);
+    getActions()
+  }, [])
 
   const showModal = () => {
-    setIsModalVisible(true);
-  };
+    setIsModalVisible(true)
+  }
   const handleOk = (values: any) => {
-    if (values.actionType === "MailWithToken") {
+    if (values.actionType === 'MailWithToken') {
       createAction({
         MailWithToken: [
           values.url,
@@ -137,12 +137,14 @@ const ActionList = ({ actions, setActions }: any) => {
           values.title,
           values.body,
         ],
-      });
-    } else if (values.actionType === "Oracle") {
+      })
+    }
+    else if (values.actionType === 'Oracle') {
       createAction({
         Oracle: [values.url, values.name],
-      });
-    } else if (values.actionType === "BuyToken") {
+      })
+    }
+    else if (values.actionType === 'BuyToken') {
       createAction({
         BuyToken: [
           values.address,
@@ -151,21 +153,20 @@ const ActionList = ({ actions, setActions }: any) => {
           values.buyTokenName,
           values.receiverEmail,
         ],
-      });
-    } else if (values.actionType === "Slack") {
+      })
+    }
+    else if (values.actionType === 'Slack') {
       createAction({
         Slack: [values.slack_hook_url, values.message],
-      });
+      })
     }
-
-    }
-    setIsModalVisible(false);
-  };
+    setIsModalVisible(false)
+  }
 
   return (
     <>
-      <Card title="Action List" style={{ width: "80%", margin: "10px auto" }}>
-        <div style={{ marginBottom: 16, textAlign: "left" }}>
+      <Card title="Action List" style={{ width: '80%', margin: '10px auto' }}>
+        <div style={{ marginBottom: 16, textAlign: 'left' }}>
           <Button type="primary" onClick={showModal}>
             Add Action
           </Button>
@@ -185,12 +186,12 @@ const ActionList = ({ actions, setActions }: any) => {
         onCancel={() => setIsModalVisible(false)}
       />
     </>
-  );
-};
+  )
+}
 
 ActionList.propTypes = {
   actions: PropTypes.array,
   setActions: PropTypes.func,
-};
+}
 
-export default ActionList;
+export default ActionList
