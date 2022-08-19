@@ -9,6 +9,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@antfu/eslint-config": "^0.25.1",
     "@polkadot/api": "^8.8.1",
     "@polkadot/extension-dapp": "^0.44.1",
