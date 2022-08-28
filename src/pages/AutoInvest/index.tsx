@@ -59,10 +59,11 @@ function AutoInvest() {
     setCreateModalVisible,
   ] = useState(false);
 
-  const [current, setCurrent] = useState("");
+  const [targetCurrent, setTargetCurrent] =
+    useState("");
   const handleCreatePlan = (record: DataType) => {
     console.log("create plan", record.currency);
-    setCurrent(record.currency);
+    setTargetCurrent(record.currency);
     setCreateModalVisible(true);
   };
 
@@ -73,7 +74,7 @@ function AutoInvest() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: "Currency",
+      title: "Target Currency",
       dataIndex: "currency",
       key: "currency",
       align: "center",
@@ -113,7 +114,7 @@ function AutoInvest() {
   const data: DataType[] = [
     {
       key: "2",
-      currency: "BTC",
+      currency: "RENBTC",
     },
     {
       key: "3",
@@ -172,6 +173,9 @@ function AutoInvest() {
           <Select
             value={currentAccount}
             style={{ width: 120 }}
+            onChange={(value) => {
+              setAccount(value);
+            }}
           >
             {currentAccounts.map((account) => (
               <Select.Option
@@ -194,13 +198,60 @@ function AutoInvest() {
       </div>
 
       <Modal
-        title={`Create Plan for ${current}`}
+        title={`Create Plan for ${targetCurrent}`}
         maskClosable={false}
         visible={createModalVisible}
         onCancel={() => {
           setCreateModalVisible(false);
         }}
-        onOk={() => {}}
+        onOk={() => {
+          form
+            .validateFields()
+            .then(async (values) => {
+              form.resetFields();
+              console.log(values);
+              const {
+                amount,
+                sellCurrency,
+                buyTimer,
+              } = values;
+
+              const now = Math.floor(
+                new Date().getTime() / 1000
+              );
+
+              await index.createTrigger({
+                Timer: [now, buyTimer],
+              });
+
+              await index.createAction({
+                BuyToken: [
+                  currentAccount,
+                  sellCurrency,
+                  amount,
+                  targetCurrent,
+                  "shiyivei@outlook.com",
+                ],
+              });
+
+              await index.createRecipe(0, 0);
+
+              console.log(
+                "buyAddress:",
+                currentAccount
+              );
+              console.log(
+                "targetCurrent:",
+                targetCurrent
+              );
+            })
+            .catch((info) => {
+              console.error(
+                "Validate Failed:",
+                info
+              );
+            });
+        }}
       >
         <Form
           name="createPlanForm"
@@ -223,8 +274,8 @@ function AutoInvest() {
             <Input placeholder="Invest Amount" />
           </Form.Item>
           <Form.Item
-            label="Invest Currency"
-            name="investCurrency"
+            label="Sell Currency"
+            name="sellCurrency"
             rules={[
               {
                 required: true,
@@ -234,8 +285,8 @@ function AutoInvest() {
             ]}
           >
             <Select placeholder="Invest Currency">
-              <Select.Option value="BTC">
-                BTC
+              <Select.Option value="AUSD">
+                AUSD
               </Select.Option>
               <Select.Option value="ETH">
                 ETH
@@ -246,8 +297,8 @@ function AutoInvest() {
             </Select>
           </Form.Item>
           <Form.Item
-            label="Buy Price"
-            name="buyPrice"
+            label="Buy Timer"
+            name="buyTimer"
             rules={[
               {
                 required: true,
@@ -258,7 +309,7 @@ function AutoInvest() {
           >
             <Input placeholder="Buy Price" />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             label="Cycle Type"
             name="cycleType"
             rules={[
@@ -280,8 +331,8 @@ function AutoInvest() {
                 Month
               </Radio.Button>
             </Radio.Group>
-          </Form.Item>
-          {({ getFieldValue }) => {
+          </Form.Item> */}
+          {/* {({ getFieldValue }) => {
             const cycleType =
               getFieldValue("cycleType");
             if (cycleType === "week") {
@@ -352,7 +403,7 @@ function AutoInvest() {
             ]}
           >
             <TimePicker format="HH:mm" />
-          </Form.Item>
+          </Form.Item> */}
         </Form>
       </Modal>
     </div>

@@ -6,10 +6,12 @@ import { Keyring } from "@polkadot/keyring";
 import dayjs from "dayjs";
 
 // 如没有运行 node-template，也可试连到波卡主网上： `wss://rpc.polkadot.io`.
-// const provider = new WsProvider('ws://127.0.0.1:9944')
 const provider = new WsProvider(
-  "wss://rpc.polkadot.io"
+  "ws://127.0.0.1:9944"
 );
+// const provider = new WsProvider(
+//   "wss://rpc.polkadot.io"
+// );
 // const provider = new WsProvider('wss://difttt.dmb.top/ws')
 // const provider = new WsProvider('ws://39.108.194.248:9944')
 const api = await ApiPromise.create({ provider });
@@ -110,12 +112,15 @@ async function transfer(
   return hash;
 }
 
-async function createTrigger(data: any) {
+async function createTrigger(
+  data: any,
+  user: any = Bob
+) {
   return new Promise((resolve) => {
     api.tx.diftttModule
       .createTriger(data)
       .signAndSend(
-        Alice,
+        user,
         ({ events = [], status }) => {
           if (status.isFinalized)
             resolve({ events, status });
@@ -207,12 +212,15 @@ async function getTriggers() {
   return triggers;
 }
 
-async function createAction(data: any) {
+async function createAction(
+  data: any,
+  user: any = Bob
+) {
   return new Promise((resolve) => {
     api.tx.diftttModule
       .createAction(data)
       .signAndSend(
-        Alice,
+        user,
         ({ events = [], status }) => {
           if (status.isFinalized)
             resolve({ events, status });
@@ -292,14 +300,14 @@ async function getActions() {
 }
 
 async function createRecipe(
-  actionId: number,
-  triggerId: number
+  actionId: number = 0,
+  triggerId: number = 0
 ) {
   return new Promise((resolve) => {
     api.tx.diftttModule
       .createRecipe(actionId, triggerId)
       .signAndSend(
-        Alice,
+        Bob,
         ({ events = [], status }) => {
           if (status.isFinalized)
             resolve({ events, status });
@@ -393,7 +401,6 @@ async function recipeTurnOff(id: number) {
 }
 
 export {
-  getLiquidity,
   getBalance,
   getUser,
   getChainInfo,
